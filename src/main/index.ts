@@ -8,6 +8,7 @@ const MATIPLANT_BEARER_TOKEN = '63b6e90f292c78236a6ae34f2c90c8620d7b780e366fa666
 const MATIPLANT_GET_ORDERS_URL = `${MATIPLANT_API_BASE_URL}/orders`
 const MATIPLANT_GET_WORKERS_URL = `${MATIPLANT_API_BASE_URL}/workers?includeOperations=true`
 const MATIPLANT_UPDATE_OPERATION_URL = `${MATIPLANT_API_BASE_URL}/operations`
+//je veux ajouter une page reglage de l'application pour y'accede ajoute un boutton sur le homepage en haut a droit avec icon reglage dans la quelle je puisse configurer le reglage reseau de application ce conncete a un  wifi  ou ethernet affiche adresse ip  et adrres mac a traver des commande linux  (Scan WiFi avec nmcli device wifi list,Connexion WiFi avec nmcli device wifi connect SSID password X, WiFi actuel avec nmcli connection show --active)
 type OperationQuantitiesPayload = {
   quantityProduced: number
   quantityRejected: number

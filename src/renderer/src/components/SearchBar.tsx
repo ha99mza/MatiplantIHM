@@ -1,3 +1,5 @@
+import { Search } from 'lucide-react'
+
 type SearchBarProps = {
   value: string
   placeholder: string
@@ -15,6 +17,7 @@ function SearchBar({
 }: SearchBarProps): React.JSX.Element {
   return (
     <div className="search-bar" onClick={onFocus}>
+      <Search className="search-icon" size={30} strokeWidth={2.2} />
       <input
         type="text"
         value={value}

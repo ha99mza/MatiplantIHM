@@ -27,6 +27,7 @@ body,
 
 body {
   margin: 0;
+  overflow: hidden;
   color: var(--color-text);
   background: var(--color-page);
   font-family:
