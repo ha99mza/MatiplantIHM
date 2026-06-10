@@ -197,24 +197,29 @@
 }
 
 .virtual-keyboard {
-  position: absolute;
-  top: calc(100% + 8px);
+  position: fixed;
+  top: auto;
   left: 0;
   right: 0;
-  z-index: 20;
+  bottom: 0;
+  z-index: 1000;
+  width: 100vw;
   margin-top: 0;
-  padding: 12px;
-  border: 2px solid #1a1a1a;
-  border-radius: 8px;
+  padding: 16px 28px 18px;
+  border: 0;
+  border-top: 3px solid #111111;
+  border-radius: 18px 18px 0 0;
   background: #ffffff;
-  box-shadow: 0 12px 28px rgba(14, 21, 31, 0.12);
+  box-shadow: 0 -18px 42px rgba(14, 21, 31, 0.2);
 }
 
 .keyboard-row {
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  margin-bottom: 6px;
+  width: min(100%, 980px);
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 10px;
+  margin: 0 auto 10px;
 }
 
 .keyboard-row:last-child {
@@ -222,25 +227,39 @@
 }
 
 .keyboard-row button {
-  min-width: 34px;
-  height: 40px;
+  min-width: 0;
+  height: 56px;
   border: 2px solid #c5ccd5;
-  border-radius: 8px;
+  border-radius: 12px;
   color: #17212b;
   background: #f3f6f8;
+  font-size: 24px;
   font-weight: 900;
+  box-shadow: 0 5px 0 #c9d2dc;
 }
 
 .keyboard-row button:hover {
   background: #e5eef4;
 }
 
-.keyboard-row-actions button {
-  min-width: 86px;
-  padding: 0 12px;
+.keyboard-row button:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #c9d2dc;
 }
 
-.last-update-filter {
+.keyboard-row-actions {
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
+.keyboard-row-actions button {
+  min-width: 0;
+  height: 58px;
+  padding: 0 12px;
+  font-size: 22px;
+}
+
+.last-update-filter,
+.status-filter {
   display: grid;
   grid-template-columns: minmax(210px, 1fr) auto;
   align-items: center;
@@ -249,7 +268,8 @@
   color: #075985;
 }
 
-.last-update-filter > span {
+.last-update-filter > span,
+.status-filter > span {
   text-align: center;
   font-size: 23px;
   font-weight: 900;
@@ -276,6 +296,11 @@
 .filter-options button.active {
   color: #ffffff;
   background: #075985;
+}
+
+.status-filter-options button {
+  min-width: 110px;
+  font-size: 17px;
 }
 
 .card-grid {
@@ -419,15 +444,22 @@
 }
 
 .status-completed,
+.status-active,
 .worker-status {
   color: #155c3c;
   background: #d8f0e5;
 }
 
 .status-high,
+.status-inactive,
 .worker-status.inactive {
   color: #7d2626;
   background: #ffe0e0;
+}
+
+.status-maintenance {
+  color: #17486a;
+  background: #d9ecf8;
 }
 
 .operation-page {
@@ -648,6 +680,108 @@
   font-weight: 700;
 }
 
+.machine-details-page {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(270px, 340px);
+  align-items: stretch;
+  gap: 16px;
+  overflow: hidden;
+}
+
+.machine-status-panel,
+.machine-info-grid {
+  border: 2px solid #d7dee5;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 8px 18px rgba(14, 21, 31, 0.08);
+}
+
+.machine-status-panel {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+}
+
+.machine-status-panel > span,
+.machine-info-grid span {
+  display: block;
+  margin: 0 0 4px;
+  color: #607083;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.machine-status-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  flex: 1;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.machine-status-actions button {
+  min-height: 0;
+  border: 2px solid #c5ccd5;
+  border-radius: 8px;
+  color: #075985;
+  background: #ffffff;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.machine-status-actions button:hover:not(:disabled),
+.machine-status-actions button.active {
+  color: #ffffff;
+  background: #075985;
+  border-color: #075985;
+}
+
+.machine-status-actions button:disabled {
+  opacity: 0.58;
+}
+
+.machine-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(140px, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 14px;
+}
+
+.machine-info-grid div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  padding: 18px;
+  border: 2px solid #e1e7ee;
+  border-radius: 8px;
+  background: #f8fbfd;
+}
+
+.machine-info-grid strong {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #17212b;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.machine-status-panel .status-badge {
+  width: 100%;
+  min-height: 48px;
+  font-size: 15px;
+}
+
 @media (max-width: 860px) {
   .nav-item {
     gap: 10px;
@@ -658,7 +792,8 @@
     grid-template-columns: 1fr;
   }
 
-  .last-update-filter {
+  .last-update-filter,
+  .status-filter {
     grid-template-columns: 1fr;
     gap: 10px;
   }
@@ -706,11 +841,13 @@
     font-size: 20px;
   }
 
-  .last-update-filter {
+  .last-update-filter,
+  .status-filter {
     min-height: 50px;
   }
 
-  .last-update-filter > span {
+  .last-update-filter > span,
+  .status-filter > span {
     font-size: 20px;
   }
 
@@ -718,6 +855,16 @@
     min-width: 48px;
     min-height: 38px;
     font-size: 18px;
+  }
+
+  .status-filter-options button {
+    min-width: 96px;
+    font-size: 14px;
+  }
+
+  .machine-filter-options button {
+    min-width: 94px;
+    font-size: 13px;
   }
 
   .card-grid {
@@ -766,6 +913,43 @@
   .pagination-state {
     font-size: 17px;
   }
+
+  .machine-details-page {
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 12px;
+  }
+
+  .machine-info-grid {
+    grid-template-columns: repeat(3, minmax(110px, 1fr));
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .machine-info-grid div {
+    gap: 6px;
+    padding: 12px;
+  }
+
+  .machine-info-grid strong {
+    font-size: 18px;
+  }
+
+  .machine-status-panel {
+    padding: 12px;
+  }
+
+  .machine-status-actions {
+    margin-top: 12px;
+  }
+
+  .machine-status-actions button {
+    font-size: 14px;
+  }
+
+  .machine-status-panel .status-badge {
+    min-height: 38px;
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 760px) {
@@ -801,7 +985,8 @@
     font-size: 18px;
   }
 
-  .last-update-filter > span {
+  .last-update-filter > span,
+  .status-filter > span {
     font-size: 22px;
   }
 
@@ -818,8 +1003,18 @@
 
   .card-grid,
   .order-summary,
-  .quantity-grid {
+  .quantity-grid,
+  .machine-details-page,
+  .machine-info-grid {
     grid-template-columns: 1fr;
+  }
+
+  .machine-details-page {
+    overflow: auto;
+  }
+
+  .machine-info-grid {
+    grid-template-rows: none;
   }
 
   .entity-title {
@@ -831,22 +1026,26 @@
   }
 
   .keyboard-row {
-    gap: 4px;
+    width: 100%;
+    gap: 6px;
   }
 
   .keyboard-row button {
-    min-width: 28px;
-    height: 36px;
-    padding: 0 5px;
+    min-width: 0;
+    height: 50px;
+    padding: 0 4px;
+    font-size: 18px;
   }
 
   .keyboard-row-actions {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: 2fr 1fr 1fr;
   }
 
   .keyboard-row-actions button {
     min-width: 0;
+    height: 52px;
+    font-size: 16px;
   }
 
   .operation-heading {

@@ -5,6 +5,14 @@ import { electronAPI } from '@electron-toolkit/preload'
 const api = {
   getOrders: (): Promise<unknown> => ipcRenderer.invoke('matiplant:get-orders'),
   getWorkers: (): Promise<unknown> => ipcRenderer.invoke('matiplant:get-workers'),
+  getMachines: (): Promise<unknown> => ipcRenderer.invoke('matiplant:get-machines'),
+  updateMachineStatus: (
+    machineId: string,
+    statusPayload: {
+      status: 'ACTIVE' | 'INACTIVE' | 'MAINTENANCE'
+    }
+  ): Promise<unknown> =>
+    ipcRenderer.invoke('matiplant:update-machine-status', machineId, statusPayload),
   updateOperationQuantities: (
     operationId: string,
     quantities: {

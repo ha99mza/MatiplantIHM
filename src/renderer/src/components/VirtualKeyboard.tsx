@@ -29,7 +29,7 @@ function VirtualKeyboard({ value, onChange }: VirtualKeyboardProps): React.JSX.E
           Suppr
         </button>
         <button type="button" onClick={() => onChange('')}>
-          Clear
+          Effacer
         </button>
       </div>
     </div>

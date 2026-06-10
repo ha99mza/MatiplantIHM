@@ -1,7 +1,7 @@
-import type { OperationStatus, OrderPriority, OrderStatus } from '../types/matiplant'
+import type { MachineStatus, OperationStatus, OrderPriority, OrderStatus } from '../types/matiplant'
 
 type StatusBadgeProps = {
-  label: OrderStatus | OperationStatus | OrderPriority
+  label: MachineStatus | OrderStatus | OperationStatus | OrderPriority
 }
 
 const statusLabels: Record<string, string> = {
@@ -10,7 +10,10 @@ const statusLabels: Record<string, string> = {
   COMPLETED: 'Completed',
   LOW: 'Low',
   MEDIUM: 'Medium',
-  HIGH: 'High'
+  HIGH: 'High',
+  ACTIVE: 'Active',
+  INACTIVE: 'Inactive',
+  MAINTENANCE: 'Maintenance'
 }
 
 function StatusBadge({ label }: StatusBadgeProps): React.JSX.Element {

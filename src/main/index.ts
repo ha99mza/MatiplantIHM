@@ -7,12 +7,20 @@ const MATIPLANT_API_BASE_URL = 'https://app.matiplant.com/api/external'
 const MATIPLANT_BEARER_TOKEN = '63b6e90f292c78236a6ae34f2c90c8620d7b780e366fa666c1a56cbbcdcfa1e7'
 const MATIPLANT_GET_ORDERS_URL = `${MATIPLANT_API_BASE_URL}/orders`
 const MATIPLANT_GET_WORKERS_URL = `${MATIPLANT_API_BASE_URL}/workers?includeOperations=true`
+const MATIPLANT_GET_MACHINES_URL = `${MATIPLANT_API_BASE_URL}/machines`
+const MATIPLANT_UPDATE_MACHINE_URL = `${MATIPLANT_API_BASE_URL}/machines`
 const MATIPLANT_UPDATE_OPERATION_URL = `${MATIPLANT_API_BASE_URL}/operations`
+// A la place de  phrase Filtre by last Update ajoute un autre filtre by status 3 boutons PENDING | IN PROGRESS | COMPLETED
+// Pour la partie machine je voudrais afficher une liste des machines avec api https://app.matiplant.com/api/external/machines avec leur status ( ACTIVE ,INACTIVE ,MAINTENANCE)  leur  nom et la possibilité de filtrer par status ensuite si je click sur une machine je veux voir les deatails de la machine et la possibilité de mettre a jour le status de la machine (ACTIVE ,INACTIVE ,MAINTENANCE) A travers api  PUT https://app.matiplant.com/api/external/machines?id=machineId avec body { status: 'ACTIVE' | 'INACTIVE' | 'MAINTENANCE' }
 //je veux ajouter une page reglage de l'application pour y'accede ajoute un boutton sur le homepage en haut a droit avec icon reglage dans la quelle je puisse configurer le reglage reseau de application ce conncete a un  wifi  ou ethernet affiche adresse ip  et adrres mac a traver des commande linux  (Scan WiFi avec nmcli device wifi list,Connexion WiFi avec nmcli device wifi connect SSID password X, WiFi actuel avec nmcli connection show --active)
 type OperationQuantitiesPayload = {
   quantityProduced: number
   quantityRejected: number
   quantityMissing: number
+}
+
+type MachineStatusPayload = {
+  status: 'ACTIVE' | 'INACTIVE' | 'MAINTENANCE'
 }
 
 function buildApiHeaders(): HeadersInit {
@@ -76,6 +84,41 @@ function registerApiHandlers(): void {
 
     return payload
   })
+
+  ipcMain.handle('matiplant:get-machines', async () => {
+    const response = await fetch(MATIPLANT_GET_MACHINES_URL, {
+      method: 'GET',
+      headers: buildApiHeaders()
+    })
+    const payload = await parseApiResponse(response)
+
+    if (!response.ok) {
+      throw new Error(apiErrorMessage(response, payload))
+    }
+
+    return payload
+  })
+
+  ipcMain.handle(
+    'matiplant:update-machine-status',
+    async (_, machineId: string, statusPayload: MachineStatusPayload) => {
+      const response = await fetch(
+        `${MATIPLANT_UPDATE_MACHINE_URL}?id=${encodeURIComponent(machineId)}`,
+        {
+          method: 'PUT',
+          headers: buildApiHeaders(),
+          body: JSON.stringify(statusPayload)
+        }
+      )
+      const payload = await parseApiResponse(response)
+
+      if (!response.ok) {
+        throw new Error(apiErrorMessage(response, payload))
+      }
+
+      return payload
+    }
+  )
 
   ipcMain.handle(
     'matiplant:update-operation-quantities',

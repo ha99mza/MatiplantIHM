@@ -1,4 +1,7 @@
 import type {
+  Machine,
+  MachineStatusPayload,
+  MachinesApiResponse,
   OperationQuantitiesPayload,
   Order,
   OrdersApiResponse,
@@ -32,6 +35,23 @@ export async function fetchWorkers(): Promise<Worker[]> {
   }
 
   return response.data?.workers ?? []
+}
+
+export async function fetchMachines(): Promise<Machine[]> {
+  const response = (await window.api.getMachines()) as MachinesApiResponse
+
+  if (!response?.success) {
+    throw new Error('La liste des machines est indisponible.')
+  }
+
+  return response.data?.machines ?? []
+}
+
+export async function updateMachineStatus(
+  machineId: string,
+  statusPayload: MachineStatusPayload
+): Promise<unknown> {
+  return window.api.updateMachineStatus(machineId, statusPayload)
 }
 
 export async function updateOperationQuantities(

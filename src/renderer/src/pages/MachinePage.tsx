@@ -1,37 +1,32 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { ChevronLeft, ChevronRight, ClipboardList } from 'lucide-react'
+import { Bot, ChevronLeft, ChevronRight } from 'lucide-react'
+import MachineStatusFilter from '../components/MachineStatusFilter'
 import PageShell from '../components/PageShell'
 import SearchBar from '../components/SearchBar'
 import StatusBadge from '../components/StatusBadge'
-import StatusFilter from '../components/StatusFilter'
 import VirtualKeyboard from '../components/VirtualKeyboard'
-import { fetchOrders, getErrorMessage } from '../services/matiplantApi'
-import type { Order, OrderStatus } from '../types/matiplant'
+import { fetchMachines, getErrorMessage } from '../services/matiplantApi'
+import type { Machine, MachineStatus } from '../types/matiplant'
 
-type OrderPageProps = {
-  onSelectOrder: (order: Order) => void
+type MachinePageProps = {
+  onSelectMachine: (machine: Machine) => void
 }
 
 const itemsPerPage = 9
 
-function formatUpdatedAt(updatedAt: string): string {
-  return new Intl.DateTimeFormat('fr-FR', {
-    day: '2-digit',
-    month: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
-  }).format(new Date(updatedAt))
-}
+function updatedAtTime(updatedAt?: string): number {
+  if (!updatedAt) {
+    return 0
+  }
 
-function updatedAtTime(updatedAt: string): number {
   const time = new Date(updatedAt).getTime()
   return Number.isNaN(time) ? 0 : time
 }
 
-function OrderPage({ onSelectOrder }: OrderPageProps): React.JSX.Element {
-  const [orders, setOrders] = useState<Order[]>([])
+function MachinePage({ onSelectMachine }: MachinePageProps): React.JSX.Element {
+  const [machines, setMachines] = useState<Machine[]>([])
   const [searchValue, setSearchValue] = useState('')
-  const [statusFilter, setStatusFilter] = useState<OrderStatus | null>(null)
+  const [statusFilter, setStatusFilter] = useState<MachineStatus | null>(null)
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -41,10 +36,10 @@ function OrderPage({ onSelectOrder }: OrderPageProps): React.JSX.Element {
   useEffect(() => {
     let isMounted = true
 
-    fetchOrders()
-      .then((nextOrders) => {
+    fetchMachines()
+      .then((nextMachines) => {
         if (isMounted) {
-          setOrders(nextOrders)
+          setMachines(nextMachines)
         }
       })
       .catch((nextError: unknown) => {
@@ -81,16 +76,17 @@ function OrderPage({ onSelectOrder }: OrderPageProps): React.JSX.Element {
     }
   }, [isKeyboardVisible])
 
-  const filteredOrders = useMemo(() => {
+  const filteredMachines = useMemo(() => {
     const query = searchValue.trim().toLowerCase()
-    const searchedOrders = query
-      ? orders.filter((order) => {
+    const searchedMachines = query
+      ? machines.filter((machine) => {
           const searchableValue = [
-            order.code,
-            order.clientReference,
-            order.product?.code,
-            order.product?.name,
-            order.client?.name
+            machine.code,
+            machine.name,
+            machine.type,
+            machine.manufacturer,
+            machine.model,
+            machine.serialNumber
           ]
             .filter(Boolean)
             .join(' ')
@@ -98,20 +94,20 @@ function OrderPage({ onSelectOrder }: OrderPageProps): React.JSX.Element {
 
           return searchableValue.includes(query)
         })
-      : orders
+      : machines
 
-    const statusFilteredOrders = statusFilter
-      ? searchedOrders.filter((order) => order.status === statusFilter)
-      : searchedOrders
+    const statusFilteredMachines = statusFilter
+      ? searchedMachines.filter((machine) => machine.status === statusFilter)
+      : searchedMachines
 
-    return [...statusFilteredOrders].sort(
+    return [...statusFilteredMachines].sort(
       (left, right) => updatedAtTime(right.updatedAt) - updatedAtTime(left.updatedAt)
     )
-  }, [orders, searchValue, statusFilter])
+  }, [machines, searchValue, statusFilter])
 
-  const totalPages = Math.max(1, Math.ceil(filteredOrders.length / itemsPerPage))
+  const totalPages = Math.max(1, Math.ceil(filteredMachines.length / itemsPerPage))
   const currentPage = Math.min(page, totalPages)
-  const paginatedOrders = filteredOrders.slice(
+  const paginatedMachines = filteredMachines.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   )
@@ -121,13 +117,13 @@ function OrderPage({ onSelectOrder }: OrderPageProps): React.JSX.Element {
     setPage(1)
   }
 
-  const updateStatusFilter = (value: OrderStatus | null): void => {
+  const updateStatusFilter = (value: MachineStatus | null): void => {
     setStatusFilter(value)
     setPage(1)
   }
 
   return (
-    <PageShell title="Orders" subtitle={`${filteredOrders.length} order(s)`} hideHeader>
+    <PageShell title="Machines" subtitle={`${filteredMachines.length} machine(s)`} hideHeader>
       <section className="section-layout">
         <div className="section-toolbar">
           <div className="section-search" ref={searchToolsRef}>
@@ -143,30 +139,32 @@ function OrderPage({ onSelectOrder }: OrderPageProps): React.JSX.Element {
             ) : null}
           </div>
 
-          <StatusFilter value={statusFilter} onChange={updateStatusFilter} />
+          <MachineStatusFilter value={statusFilter} onChange={updateStatusFilter} />
         </div>
 
-        <section className="card-grid" aria-label="Liste des orders">
+        <section className="card-grid" aria-label="Liste des machines">
           {isLoading ? <p className="state-text">Chargement...</p> : null}
           {error ? <p className="error-text">{error}</p> : null}
-          {!isLoading && !error && paginatedOrders.length === 0 ? (
-            <p className="state-text">Aucun order trouve.</p>
+          {!isLoading && !error && paginatedMachines.length === 0 ? (
+            <p className="state-text">Aucune machine trouvee.</p>
           ) : null}
           {!isLoading && !error
-            ? paginatedOrders.map((order) => (
+            ? paginatedMachines.map((machine) => (
                 <button
-                  className="entity-card order-card"
+                  className="entity-card machine-card"
                   type="button"
-                  key={order.id}
-                  onClick={() => onSelectOrder(order)}
+                  key={machine.id}
+                  onClick={() => onSelectMachine(machine)}
                 >
-                  <ClipboardList size={38} strokeWidth={2.2} />
-                  <span className="entity-title">{order.code}</span>
-                  <span className="entity-subtitle">
-                    {order.product?.name ?? 'Produit sans nom'}
+                  <Bot size={38} strokeWidth={2.2} />
+                  <span className="entity-title">{machine.name || machine.code}</span>
+                  <span className="entity-subtitle">{machine.code}</span>
+                  <span className="entity-meta">
+                    {[machine.type, machine.manufacturer, machine.model]
+                      .filter(Boolean)
+                      .join(' / ') || 'Machine'}
                   </span>
-                  <span className="entity-meta">Update {formatUpdatedAt(order.updatedAt)}</span>
-                  <StatusBadge label={order.status} />
+                  {machine.status ? <StatusBadge label={machine.status} /> : null}
                 </button>
               ))
             : null}
@@ -200,4 +198,4 @@ function OrderPage({ onSelectOrder }: OrderPageProps): React.JSX.Element {
   )
 }
 
-export default OrderPage
+export default MachinePage

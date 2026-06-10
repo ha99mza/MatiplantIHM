@@ -1,6 +1,7 @@
 export type OrderStatus = 'PENDING' | 'IN_PROGRESS' | 'COMPLETED'
 export type OrderPriority = 'LOW' | 'MEDIUM' | 'HIGH'
 export type OperationStatus = 'PENDING' | 'IN_PROGRESS' | 'COMPLETED'
+export type MachineStatus = 'ACTIVE' | 'INACTIVE' | 'MAINTENANCE'
 
 export type ApiUser = {
   id: string
@@ -27,6 +28,38 @@ export type Machine = {
   id: string
   name: string
   code: string
+  type?: string
+  status?: MachineStatus
+  manufacturer?: string
+  model?: string
+  serialNumber?: string
+  purchaseDate?: string | null
+  installationDate?: string | null
+  warrantyExpiryDate?: string | null
+  lastMaintenanceDate?: string | null
+  nextMaintenanceDate?: string | null
+  maintenanceInterval?: number | null
+  description?: string | null
+  notes?: string | null
+  imageUrl?: string | null
+  zoneId?: string | null
+  workstationId?: string | null
+  createdAt?: string
+  updatedAt?: string
+  orderOperations?: MachineOrderOperation[]
+}
+
+export type MachineOrderOperation = {
+  id: string
+  sequence: number
+  name: string
+  status: OperationStatus
+  order: {
+    id: string
+    code: string
+    status: OrderStatus
+    priority: OrderPriority
+  }
 }
 
 export type Worker = {
@@ -161,6 +194,24 @@ export type WorkersApiResponse = {
     }
   }
   timestamp?: string
+}
+
+export type MachinesApiResponse = {
+  success: boolean
+  data?: {
+    machines?: Machine[]
+    pagination?: {
+      page: number
+      limit: number
+      total: number
+      totalPages: number
+    }
+  }
+  timestamp?: string
+}
+
+export type MachineStatusPayload = {
+  status: MachineStatus
 }
 
 export type OperationQuantitiesPayload = {

@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import AppLayout, { type AppSection } from './components/AppLayout'
+import MachineDetailsPage from './pages/MachineDetailsPage'
+import MachinePage from './pages/MachinePage'
 import OperationPage from './pages/OperationPage'
 import OrderPage from './pages/OrderPage'
 import SectionPlaceholderPage from './pages/SectionPlaceholderPage'
 import WorkerOperationsPage from './pages/WorkerOperationsPage'
 import WorkerPage from './pages/WorkerPage'
-import type { Order, Worker } from './types/matiplant'
+import type { Machine, Order, Worker } from './types/matiplant'
 
 type Route =
   | {
@@ -29,6 +31,10 @@ type Route =
       name: 'machines'
     }
   | {
+      name: 'machineDetails'
+      machine: Machine
+    }
+  | {
       name: 'settings'
     }
 
@@ -39,6 +45,10 @@ function sectionFromRoute(route: Route): AppSection {
 
   if (route.name === 'workerOperations') {
     return 'workers'
+  }
+
+  if (route.name === 'machineDetails') {
+    return 'machines'
   }
 
   return route.name
@@ -73,7 +83,19 @@ function App(): React.JSX.Element {
     }
 
     if (route.name === 'machines') {
-      return <SectionPlaceholderPage title="Machines" />
+      return (
+        <MachinePage onSelectMachine={(machine) => setRoute({ name: 'machineDetails', machine })} />
+      )
+    }
+
+    if (route.name === 'machineDetails') {
+      return (
+        <MachineDetailsPage
+          machine={route.machine}
+          onBack={() => setRoute({ name: 'machines' })}
+          onMachineUpdated={(machine) => setRoute({ name: 'machineDetails', machine })}
+        />
+      )
     }
 
     if (route.name === 'settings') {
