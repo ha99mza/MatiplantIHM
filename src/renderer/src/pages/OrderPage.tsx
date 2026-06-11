@@ -14,15 +14,6 @@ type OrderPageProps = {
 
 const itemsPerPage = 9
 
-function formatUpdatedAt(updatedAt: string): string {
-  return new Intl.DateTimeFormat('fr-FR', {
-    day: '2-digit',
-    month: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
-  }).format(new Date(updatedAt))
-}
-
 function updatedAtTime(updatedAt: string): number {
   const time = new Date(updatedAt).getTime()
   return Number.isNaN(time) ? 0 : time
@@ -165,7 +156,6 @@ function OrderPage({ onSelectOrder }: OrderPageProps): React.JSX.Element {
                   <span className="entity-subtitle">
                     {order.product?.name ?? 'Produit sans nom'}
                   </span>
-                  <span className="entity-meta">Update {formatUpdatedAt(order.updatedAt)}</span>
                   <StatusBadge label={order.status} />
                 </button>
               ))

@@ -159,11 +159,11 @@ function MachinePage({ onSelectMachine }: MachinePageProps): React.JSX.Element {
                   <Bot size={38} strokeWidth={2.2} />
                   <span className="entity-title">{machine.name || machine.code}</span>
                   <span className="entity-subtitle">{machine.code}</span>
-                  <span className="entity-meta">
+                  {/* <span className="entity-meta">
                     {[machine.type, machine.manufacturer, machine.model]
                       .filter(Boolean)
                       .join(' / ') || 'Machine'}
-                  </span>
+                  </span> */}
                   {machine.status ? <StatusBadge label={machine.status} /> : null}
                 </button>
               ))

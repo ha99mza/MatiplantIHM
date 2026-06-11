@@ -35,6 +35,7 @@ function WorkerOperationsPage({ worker, onBack }: WorkerOperationsPageProps): Re
     <PageShell
       title="Worker operations"
       subtitle={`${workerName(currentWorker)} / ${currentWorker.employeeId}`}
+      hideHeader
       onBack={onBack}
     >
       <section className="operation-page">

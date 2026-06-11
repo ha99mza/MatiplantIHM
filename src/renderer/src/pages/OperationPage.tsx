@@ -48,10 +48,11 @@ function OperationPage({ order, onBack }: OperationPageProps): React.JSX.Element
     <PageShell
       title="Operations"
       subtitle={`${currentOrder.code} / ${currentOrder.product?.name ?? 'Produit sans nom'}`}
+      hideHeader
       onBack={onBack}
     >
       <section className="operation-page">
-        <div className="order-summary">
+        <div className="order-summary order-summary-operations">
           <div>
             <span>Order</span>
             <strong>{currentOrder.code}</strong>
@@ -63,6 +64,10 @@ function OperationPage({ order, onBack }: OperationPageProps): React.JSX.Element
           <div>
             <span>Planned</span>
             <strong>{currentOrder.quantityPlanned}</strong>
+          </div>
+          <div>
+            <span>Operations</span>
+            <strong>{currentOrder.operations.length}</strong>
           </div>
           <StatusBadge label={currentOrder.status} />
         </div>

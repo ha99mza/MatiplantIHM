@@ -482,6 +482,10 @@
   box-shadow: 0 8px 18px rgba(14, 21, 31, 0.08);
 }
 
+.order-summary-operations {
+  grid-template-columns: repeat(6, minmax(92px, 1fr));
+}
+
 .order-summary div {
   min-width: 0;
 }
@@ -508,11 +512,77 @@
 .operation-list {
   flex: 1;
   min-height: 0;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 2px 3px 10px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(64px, auto);
+  align-content: start;
+  gap: 10px;
+  padding: 2px 3px 6px;
+}
+
+.operation-list-row {
+  width: 100%;
+  min-height: 64px;
+  display: grid;
+  grid-template-columns: 50px minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 4px 10px;
+  padding: 9px 10px;
+  border: 2px solid #d7dee5;
+  border-radius: 8px;
+  color: #17212b;
+  background: #ffffff;
+  text-align: left;
+  box-shadow: 0 8px 18px rgba(14, 21, 31, 0.08);
+}
+
+.operation-list-row .operation-sequence {
+  grid-row: 1 / span 2;
+}
+
+.operation-list-row .status-badge {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+
+.operation-pagination {
+  flex: 0 0 auto;
+}
+
+.operation-pagination .pagination-button {
+  min-height: 44px;
+  font-size: 17px;
+}
+
+.operation-pagination .pagination-state {
+  font-size: 17px;
+}
+
+.operation-list-row:hover {
+  border-color: #075985;
+  background: #f5fbff;
+}
+
+.operation-list-name,
+.operation-list-meta {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.operation-list-name {
+  color: #075985;
+  font-size: 16px;
+  font-weight: 950;
+}
+
+.operation-list-meta {
+  color: #607083;
+  font-size: 12px;
+  font-weight: 750;
 }
 
 .operation-row {
@@ -534,8 +604,8 @@
 }
 
 .operation-sequence {
-  width: 46px;
-  height: 46px;
+  width: 42px;
+  height: 42px;
   display: grid;
   place-items: center;
   border-radius: 8px;
@@ -636,6 +706,218 @@
   justify-content: flex-end;
   gap: 10px;
   flex-wrap: wrap;
+}
+
+.operation-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(9, 17, 28, 0.48);
+}
+
+.operation-edit-modal {
+  width: min(960px, 100%);
+  max-height: calc(100vh - 36px);
+  min-height: min(520px, calc(100vh - 36px));
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  border: 3px solid #111111;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 26px 70px rgba(9, 17, 28, 0.28);
+}
+
+.operation-modal-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.operation-modal-header > div {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.operation-modal-header h2,
+.operation-modal-header p {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.operation-modal-header h2 {
+  color: #075985;
+  font-size: 24px;
+  font-weight: 950;
+}
+
+.operation-modal-header p {
+  grid-column: 2;
+  color: #607083;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.operation-planned-chip {
+  min-width: 108px;
+  min-height: 54px;
+  display: grid;
+  place-items: center;
+  padding: 6px 12px;
+  border: 2px solid #d7dee5;
+  border-radius: 8px;
+  background: #f8fbfd;
+}
+
+.operation-planned-chip span {
+  color: #607083;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.operation-planned-chip strong {
+  color: #075985;
+  font-size: 22px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.operation-modal-body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 14px;
+}
+
+.operation-edit-quantities {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.operation-quantity-card {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 6px 12px;
+  padding: 12px;
+  border: 2px solid #d7dee5;
+  border-radius: 8px;
+  background: #f8fbfd;
+}
+
+.operation-quantity-card.active {
+  border-color: #075985;
+  background: #edf8ff;
+}
+
+.operation-quantity-card > span {
+  color: #607083;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.operation-quantity-card strong {
+  color: #17212b;
+  font-size: 34px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.operation-quantity-card small {
+  color: #607083;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.operation-quantity-controls {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr) 62px;
+  gap: 8px;
+  align-items: center;
+}
+
+.operation-quantity-controls button,
+.operation-quantity-controls input,
+.numeric-keyboard button {
+  border: 2px solid #c5ccd5;
+  border-radius: 10px;
+  color: #17212b;
+  background: #ffffff;
+  font-weight: 900;
+}
+
+.operation-quantity-controls button {
+  height: 54px;
+  color: #075985;
+  font-size: 20px;
+}
+
+.operation-quantity-controls input {
+  width: 100%;
+  height: 54px;
+  padding: 0 8px;
+  text-align: center;
+  font-size: 24px;
+  outline: none;
+}
+
+.operation-quantity-controls input:focus {
+  border-color: #075985;
+}
+
+.operation-quantity-controls input::-webkit-outer-spin-button,
+.operation-quantity-controls input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.operation-quantity-controls input[type='number'] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.numeric-keyboard {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.numeric-keyboard button {
+  min-height: 0;
+  font-size: 24px;
+  box-shadow: 0 5px 0 #c9d2dc;
+}
+
+.numeric-keyboard button:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #c9d2dc;
+}
+
+.operation-modal-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
 .state-text,
@@ -1022,6 +1304,10 @@
   }
 
   .pagination-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .operation-list {
     grid-template-columns: 1fr;
   }
 
