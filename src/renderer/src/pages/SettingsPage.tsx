@@ -331,7 +331,7 @@ function SettingsPage(): React.JSX.Element {
                 <option value="">{isWifiLoading ? 'Scan...' : 'Choisir un WiFi'}</option>
                 {wifiNetworks.map((network) => (
                   <option value={network.ssid} key={`${network.ssid}-${network.security}`}>
-                    {network.ssid} / {network.signal}% / {network.security}
+                    {network.ssid} - {network.signal}% 
                   </option>
                 ))}
               </select>

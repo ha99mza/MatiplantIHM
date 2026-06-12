@@ -11,12 +11,8 @@ const MATIPLANT_GET_WORKERS_URL = `${MATIPLANT_API_BASE_URL}/workers?includeOper
 const MATIPLANT_GET_MACHINES_URL = `${MATIPLANT_API_BASE_URL}/machines`
 const MATIPLANT_UPDATE_MACHINE_URL = `${MATIPLANT_API_BASE_URL}/machines`
 const MATIPLANT_UPDATE_OPERATION_URL = `${MATIPLANT_API_BASE_URL}/operations`
-// A la place de  phrase Filtre by last Update ajoute un autre filtre by status 3 boutons PENDING | IN PROGRESS | COMPLETED
-// Dans la pop de modification des quantites affiche la quantite planifiee pour oparation  et dans input des supprime les fleches qui permettent de modifier les quantitite et dans la page qui liste les operation supprime la partie qui en haut  au c'est Opertions order/product et pour la liste des operation liste lesavec une une pagination pour ne pas a voir a scroll dans la page
-// Pour la page operation je veux affcher la liste des operation avec leur nom ,leur status ,leur sequence. Et quand je click sur une operation une pop s'ouvre dans la quelle je peux modifier les quantites produites , rejetees et manquant si je click sur une quantites je peux les modifier avec des des boutton +1 eet -1 et la possibilité de les saisir avec le clavier
-// Pour la partie machine je voudrais afficher une liste des machines avec api https://app.matiplant.com/api/external/machines avec leur status ( ACTIVE ,INACTIVE ,MAINTENANCE)  leur  nom et la possibilité de filtrer par status ensuite si je click sur une machine je veux voir les deatails de la machine et la possibilité de mettre a jour le status de la machine (ACTIVE ,INACTIVE ,MAINTENANCE) A travers api  PUT https://app.matiplant.com/api/external/machines?id=machineId avec body { status: 'ACTIVE' | 'INACTIVE' | 'MAINTENANCE' }
-//je veux ajouter une page reglage de l'application  dans la quelle je puisse configurer le reglage reseau de application ce conncete a un  wifi  ou ethernet affiche adresse ip  et adrres mac a traver des commande linux  (Scan WiFi avec nmcli device wifi list,Connexion WiFi avec nmcli device wifi connect SSID password X, WiFi actuel avec nmcli connection show --active)  pOUR la page Operation si le bouton de operation sur le navbar je veux se dirige vers la page order
-//Pour la partie wifi j'arrive pa
+
+
 type OperationQuantitiesPayload = {
   quantityProduced: number
   quantityRejected: number

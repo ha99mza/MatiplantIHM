@@ -55,7 +55,7 @@
   font-weight: 900;
 }
 
-.nav-item:hover,
+/* .nav-item:hover, */
 .nav-item.active {
   color: #ffffff;
   background: #075985;
