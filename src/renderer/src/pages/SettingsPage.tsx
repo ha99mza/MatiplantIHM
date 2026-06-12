@@ -329,7 +329,7 @@ function SettingsPage(): React.JSX.Element {
                 value={selectedSsid}
                 disabled={isConnecting}
                 placeholder={isWifiLoading ? 'Scan...' : 'Choisir un WiFi'}
-                onFocus={() => setKeyboardTarget('ssid')}
+                //onFocus={() => setKeyboardTarget('ssid')}
                 onChange={(event) => setSelectedSsid(event.target.value)}
               />
               <datalist id="wifi-network-options">
