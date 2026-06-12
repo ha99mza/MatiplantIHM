@@ -323,24 +323,18 @@ function SettingsPage(): React.JSX.Element {
 
             <label className="network-field">
               <span>WiFi</span>
-              <input
-                type="text"
-                list="wifi-network-options"
+              <select
                 value={selectedSsid}
                 disabled={isConnecting}
-                placeholder={isWifiLoading ? 'Scan...' : 'Choisir un WiFi'}
-                //onFocus={() => setKeyboardTarget('ssid')}
                 onChange={(event) => setSelectedSsid(event.target.value)}
-              />
-              <datalist id="wifi-network-options">
+              >
+                <option value="">{isWifiLoading ? 'Scan...' : 'Choisir un WiFi'}</option>
                 {wifiNetworks.map((network) => (
-                  <option
-                    value={network.ssid}
-                    key={`${network.ssid}-${network.security}`}
-                    label={`${network.signal}% / ${network.security}`}
-                  />
+                  <option value={network.ssid} key={`${network.ssid}-${network.security}`}>
+                    {network.ssid} / {network.signal}% / {network.security}
+                  </option>
                 ))}
-              </datalist>
+              </select>
             </label>
 
             <label className="network-field">
@@ -369,7 +363,11 @@ function SettingsPage(): React.JSX.Element {
             </button>
 
             {keyboardTarget ? (
-              <VirtualKeyboard value={keyboardValue} onChange={updateKeyboardValue} />
+              <VirtualKeyboard
+                value={keyboardValue}
+                onChange={updateKeyboardValue}
+                onValidate={() => setKeyboardTarget(null)}
+              />
             ) : null}
           </form>
 

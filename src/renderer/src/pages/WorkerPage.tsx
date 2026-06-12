@@ -135,7 +135,11 @@ function WorkerPage({ onSelectWorker }: WorkerPageProps): React.JSX.Element {
               onFocus={() => setIsKeyboardVisible(true)}
             />
             {isKeyboardVisible ? (
-              <VirtualKeyboard value={searchValue} onChange={updateSearch} />
+              <VirtualKeyboard
+                value={searchValue}
+                onChange={updateSearch}
+                onValidate={() => setIsKeyboardVisible(false)}
+              />
             ) : null}
           </div>
 

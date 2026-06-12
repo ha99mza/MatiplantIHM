@@ -135,7 +135,11 @@ function MachinePage({ onSelectMachine }: MachinePageProps): React.JSX.Element {
               onFocus={() => setIsKeyboardVisible(true)}
             />
             {isKeyboardVisible ? (
-              <VirtualKeyboard value={searchValue} onChange={updateSearch} />
+              <VirtualKeyboard
+                value={searchValue}
+                onChange={updateSearch}
+                onValidate={() => setIsKeyboardVisible(false)}
+              />
             ) : null}
           </div>
 
