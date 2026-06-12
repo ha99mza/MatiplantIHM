@@ -1064,6 +1064,407 @@
   font-size: 15px;
 }
 
+.settings-page {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(28px, auto) auto minmax(0, 1fr);
+  gap: 10px;
+  overflow: hidden;
+}
+
+.settings-feedback {
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.settings-error,
+.settings-success {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  min-height: 28px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.settings-error {
+  color: #7d2626;
+}
+
+.settings-success {
+  color: #155c3c;
+}
+
+.network-status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.network-status-card,
+.settings-panel {
+  border: 2px solid #d7dee5;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 8px 18px rgba(14, 21, 31, 0.08);
+}
+
+.network-status-card {
+  min-width: 0;
+  min-height: 66px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 12px;
+}
+
+.network-status-card span,
+.network-field span {
+  color: #607083;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.network-status-card strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #17212b;
+  font-size: 18px;
+  font-weight: 950;
+}
+
+.network-workspace {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(310px, 0.8fr);
+  gap: 12px;
+  overflow: hidden;
+}
+
+.settings-workspace-simple {
+  grid-template-columns: minmax(0, 1fr) minmax(310px, 0.85fr);
+  align-items: stretch;
+}
+
+.settings-panel {
+  min-height: 0;
+  padding: 12px;
+  overflow: hidden;
+}
+
+.settings-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 38px;
+}
+
+.settings-panel-header > div {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #075985;
+}
+
+.settings-panel-header strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 19px;
+  font-weight: 950;
+}
+
+.settings-panel-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.compact-action {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 10px;
+  font-size: 13px;
+}
+
+.wifi-panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) 34px;
+  gap: 10px;
+}
+
+.wifi-network-list {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  overflow: hidden;
+}
+
+.wifi-network-button {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) 62px;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 2px 8px;
+  padding: 7px 8px;
+  border: 2px solid #d7dee5;
+  border-radius: 8px;
+  color: #17212b;
+  background: #ffffff;
+  text-align: left;
+}
+
+.wifi-network-button:hover,
+.wifi-network-button.selected,
+.wifi-network-button.connected {
+  border-color: #075985;
+  background: #edf8ff;
+}
+
+.wifi-network-button > svg {
+  grid-row: 1 / span 2;
+  justify-self: center;
+  color: #075985;
+}
+
+.wifi-network-name,
+.wifi-network-security {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wifi-network-name {
+  color: #075985;
+  font-size: 16px;
+  font-weight: 950;
+}
+
+.wifi-network-security {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #607083;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.wifi-network-signal {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  justify-self: stretch;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 30px;
+  border-radius: 8px;
+  color: #155c3c;
+  background: #d8f0e5;
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.settings-pagination {
+  display: grid;
+  grid-template-columns: 42px 1fr 42px;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-pagination button {
+  min-height: 34px;
+  border: 2px solid #c5ccd5;
+  border-radius: 8px;
+  color: #075985;
+  background: #ffffff;
+  font-weight: 900;
+}
+
+.settings-pagination button:disabled {
+  opacity: 0.45;
+}
+
+.settings-pagination span {
+  text-align: center;
+  color: #34373d;
+  font-size: 14px;
+  font-weight: 850;
+}
+
+.network-config-column {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 12px;
+  overflow: hidden;
+}
+
+.wifi-connect-panel {
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+  gap: 9px;
+}
+
+.wifi-connect-panel-simple {
+  grid-template-rows: auto auto auto auto auto;
+  align-content: start;
+  gap: 14px;
+}
+
+.network-field {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.network-field input {
+  width: 100%;
+  height: 56px;
+  min-width: 0;
+  border: 2px solid #c5ccd5;
+  border-radius: 8px;
+  padding: 0 14px;
+  color: #17212b;
+  background: #ffffff;
+  font-size: 22px;
+  font-weight: 850;
+  outline: none;
+}
+
+.network-field input:focus {
+  border-color: #075985;
+}
+
+.network-submit-button {
+  width: 100%;
+  min-height: 56px;
+  font-size: 18px;
+}
+
+.selected-wifi-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.selected-wifi-summary span {
+  min-width: 0;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 8px;
+  color: #075985;
+  background: #edf5fa;
+  font-size: 14px;
+  font-weight: 950;
+}
+
+.ethernet-panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 10px;
+}
+
+.ethernet-device-list {
+  min-height: 0;
+  display: grid;
+  grid-auto-rows: minmax(50px, auto);
+  gap: 8px;
+  overflow: hidden;
+}
+
+.ethernet-device-button {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 92px 82px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border: 2px solid #d7dee5;
+  border-radius: 8px;
+  color: #17212b;
+  background: #ffffff;
+  text-align: left;
+}
+
+.ethernet-device-button:hover:not(:disabled) {
+  border-color: #075985;
+  background: #f5fbff;
+}
+
+.ethernet-device-button span,
+.ethernet-device-button strong,
+.ethernet-device-button small,
+.ethernet-device-button em,
+.ethernet-device-button b {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ethernet-device-button span {
+  display: grid;
+  gap: 2px;
+}
+
+.ethernet-device-button strong {
+  color: #075985;
+  font-size: 16px;
+  font-weight: 950;
+}
+
+.ethernet-device-button small {
+  color: #607083;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.ethernet-device-button em {
+  color: #34373d;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.ethernet-device-button b {
+  justify-self: end;
+  padding: 7px 8px;
+  border-radius: 8px;
+  color: #075985;
+  background: #edf5fa;
+  font-size: 11px;
+  font-weight: 950;
+}
+
 @media (max-width: 860px) {
   .nav-item {
     gap: 10px;
@@ -1232,6 +1633,65 @@
     min-height: 38px;
     font-size: 12px;
   }
+
+  .settings-page {
+    grid-template-rows: minmax(24px, auto) auto minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .settings-panel {
+    padding: 10px;
+  }
+
+  .network-status-card {
+    min-height: 58px;
+    padding: 8px 10px;
+  }
+
+  .network-status-card strong {
+    font-size: 15px;
+  }
+
+  .settings-panel-header {
+    min-height: 34px;
+  }
+
+  .settings-panel-header strong {
+    font-size: 17px;
+  }
+
+  .network-workspace {
+    gap: 10px;
+  }
+
+  .wifi-panel {
+    gap: 8px;
+  }
+
+  .wifi-network-list {
+    gap: 7px;
+  }
+
+  .wifi-network-name {
+    font-size: 15px;
+  }
+
+  .network-field input,
+  .network-submit-button {
+    height: 48px;
+    min-height: 48px;
+    font-size: 18px;
+  }
+
+  .selected-wifi-summary span {
+    min-height: 38px;
+    font-size: 12px;
+  }
+
+  .ethernet-device-list {
+    grid-auto-rows: minmax(46px, auto);
+    gap: 7px;
+  }
 }
 
 @media (max-width: 760px) {
@@ -1287,8 +1747,18 @@
   .order-summary,
   .quantity-grid,
   .machine-details-page,
-  .machine-info-grid {
+  .machine-info-grid,
+  .network-status-grid,
+  .network-workspace {
     grid-template-columns: 1fr;
+  }
+
+  .settings-page {
+    overflow: auto;
+  }
+
+  .network-config-column {
+    grid-template-rows: auto auto;
   }
 
   .machine-details-page {

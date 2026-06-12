@@ -21,7 +21,13 @@ const api = {
       quantityMissing: number
     }
   ): Promise<unknown> =>
-    ipcRenderer.invoke('matiplant:update-operation-quantities', operationId, quantities)
+    ipcRenderer.invoke('matiplant:update-operation-quantities', operationId, quantities),
+  getNetworkStatus: (): Promise<unknown> => ipcRenderer.invoke('network:get-status'),
+  scanWifiNetworks: (): Promise<unknown> => ipcRenderer.invoke('network:scan-wifi'),
+  connectWifi: (payload: { ssid: string; password?: string }): Promise<unknown> =>
+    ipcRenderer.invoke('network:connect-wifi', payload),
+  connectEthernet: (deviceName: string): Promise<unknown> =>
+    ipcRenderer.invoke('network:connect-ethernet', deviceName)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

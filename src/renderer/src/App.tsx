@@ -4,7 +4,7 @@ import MachineDetailsPage from './pages/MachineDetailsPage'
 import MachinePage from './pages/MachinePage'
 import OperationPage from './pages/OperationPage'
 import OrderPage from './pages/OrderPage'
-import SectionPlaceholderPage from './pages/SectionPlaceholderPage'
+import SettingsPage from './pages/SettingsPage'
 import WorkerOperationsPage from './pages/WorkerOperationsPage'
 import WorkerPage from './pages/WorkerPage'
 import type { Machine, Order, Worker } from './types/matiplant'
@@ -16,9 +16,6 @@ type Route =
   | {
       name: 'orderOperations'
       order: Order
-    }
-  | {
-      name: 'operations'
     }
   | {
       name: 'workers'
@@ -55,7 +52,23 @@ function sectionFromRoute(route: Route): AppSection {
 }
 
 function routeFromSection(section: AppSection): Route {
-  return { name: section }
+  if (section === 'operations') {
+    return { name: 'orders' }
+  }
+
+  if (section === 'orders') {
+    return { name: 'orders' }
+  }
+
+  if (section === 'workers') {
+    return { name: 'workers' }
+  }
+
+  if (section === 'machines') {
+    return { name: 'machines' }
+  }
+
+  return { name: 'settings' }
 }
 
 function App(): React.JSX.Element {
@@ -99,10 +112,10 @@ function App(): React.JSX.Element {
     }
 
     if (route.name === 'settings') {
-      return <SectionPlaceholderPage title="Reglages" />
+      return <SettingsPage />
     }
 
-    return <SectionPlaceholderPage title="Operations" />
+    return <OrderPage onSelectOrder={(order) => setRoute({ name: 'orderOperations', order })} />
   })()
 
   return (

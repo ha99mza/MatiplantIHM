@@ -10,6 +10,11 @@ type MatiplantMachineStatusPayload = {
   status: 'ACTIVE' | 'INACTIVE' | 'MAINTENANCE'
 }
 
+type NetworkWifiConnectPayload = {
+  ssid: string
+  password?: string
+}
+
 interface MatiplantApi {
   getOrders: () => Promise<unknown>
   getWorkers: () => Promise<unknown>
@@ -22,6 +27,10 @@ interface MatiplantApi {
     operationId: string,
     quantities: MatiplantOperationQuantitiesPayload
   ) => Promise<unknown>
+  getNetworkStatus: () => Promise<unknown>
+  scanWifiNetworks: () => Promise<unknown>
+  connectWifi: (payload: NetworkWifiConnectPayload) => Promise<unknown>
+  connectEthernet: (deviceName: string) => Promise<unknown>
 }
 
 declare global {
